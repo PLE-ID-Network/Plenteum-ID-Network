@@ -1,0 +1,50 @@
+{
+  "block_store_path": "/tmp/block_store/",
+  "torii_port": 50051,
+  "internal_port": 10001,
+  "database": {
+    "host": "localhost",
+    "port": 5432,
+    "user": "postgres",
+    "password": "mysecretpassword",
+    "working database": "iroha_data",
+    "maintenance database": "postgres"
+  },
+  "max_proposal_size": 10,
+  "proposal_delay": 5000,
+  "vote_delay": 5000,
+  "mst_enable" : true,
+  "mst_expiration_time" : 1440,
+  "max_rounds_delay": 3000,
+  "stale_stream_max_rounds": 2,
+  "initial_peers" : [{
+    "address":"35.246.47.41:10001", 
+    "public_key": "700a5c2391ecb6e390112207124e3f1cbab950add926af49e614374710919086"
+    },
+    {
+    "address":"35.185.9.198:10001", 
+    "public_key": "e44784f099819f824d6eca53a3cb3b65281d92500ff6454a7d4b23f07b8c5c17"
+    }],
+  "log": {
+    "level": "info",
+    "patterns": {
+      "debug": "PLENTEUM ID NETWORK - %v.",
+      "error": "MAMA MIA! %v!!!"
+    },
+    "children": {
+      "KeysManager": {
+        "level": "trace"
+      },
+      "Irohad": {
+        "children": {
+          "Storage": {
+            "level": "trace",
+            "patterns": {
+              "debug": "thread %t: %v."
+            }
+          }
+        }
+      }
+    }
+  }
+}

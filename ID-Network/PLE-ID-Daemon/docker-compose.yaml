@@ -1,0 +1,55 @@
+version: '3.5'
+
+services:
+  plenteum-id-network:
+    image: hyperledger/iroha:master
+    container_name: plenteum-id-network
+    depends_on:
+      - plenteum-postgres
+    restart: always
+    tty: true
+    environment:
+      - KEY=keys/node0
+      - IROHA_POSTGRES_HOST=localhost
+      - IROHA_POSTGRES_PORT=5432
+      - IROHA_POSTGRES_USER=postgres
+      - IROHA_POSTGRES_PASSWORD=mysecretpassword
+    entrypoint:
+      - /opt/iroha_data/entrypoint.sh
+    network_mode: host
+    volumes:
+      - ./iroha:/opt/iroha_data
+    ports:
+      - 50051:50051
+      - 10001:10001
+    # logging:
+    #   driver: none
+
+  plenteum-postgres:
+    image: postgres:9.5
+    container_name: postgres-plenteum
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_USER=postgres
+    network_mode: host
+    ports:
+     - 5432:5432
+    logging:
+      driver: none
+  
+  grpcwebproxy:
+    build:
+      context: grpcwebproxy/
+    container_name: id-network-grpcwebproxy
+    depends_on:
+      - plenteum-id-network
+    entrypoint:
+      - grpcwebproxy
+      - --backend_addr=localhost:50051
+      - --run_tls_server=false
+      - --allow_all_origins=true
+    network_mode: host
+    logging:
+      driver: none
+    ports:
+      - 8081:8080
