@@ -2,6 +2,8 @@
 
 Plenteum ID Network uses Hyperledger Iroha at its core.
 
+Roles: Sets of permissions applied to users accounts
+
 ## Hyperledger Iroha Distributed Ledger
 
 ### System Requirements
@@ -14,17 +16,28 @@ Plenteum ID Network uses Hyperledger Iroha at its core.
 * Ports to be publically accessable:
   * Default Ports 10001 & 50051
 
-## How To Run
+## How To Setup
 
-clone repo locally
+Clone this repository
 
-Please ensure you are in the root directory of the project folder.
+### Important
 
-This will be the same location as the docker-compose.yaml file
+*New Node Keypairs need to be generated and are not included for security.*
 
-Amend config as required.
+Run the following commands with included scripts to install all of the required depencies automatically.
 
-open a terminal in Bash
+For manual configurations, ensure that the Python 3.6 or Later, build-essentials 
+
+1. 
+
+cd PLE-ID-Core
+
+
+ generate new keys using the script located in ./PLE-ID)Core/scripts
+
+* Run ./install-python.sh
+
+Run ./install-docker.sh if you do not have docker + docker-compose installed
 
 * docker-compose up -d (Runs in background)
 * docker-compose up Runs with Interactive Logs
@@ -63,6 +76,8 @@ irohad --genesis_block genesis.block --config config.docker --keypair_name $KEY
 
 If launching multiple nodes, the following enviroment variables will need to be amended accordingly.
 
+It is *not recomended* to have more that 1 IDN Cluster running on a Server
+
 Please ensure that the files match their expected naming convetions else the Daemon will not find the correct keys and cannot start the ledger
 
 services:
@@ -91,7 +106,3 @@ services:
       Default gRPC port for Iroha, if this port is occupied change it accordingly. Note that all commands & queries will need to Correct Ports and would need to know this in advance for commiting transactions. This is exposed to the public. Normal security mesures will need to be implemented
       - 10001:10001
       Default Torrii port for Irorha Daemon peer communications
-
-## Docker
-
-The Docker folder contains all of the images and compose files to setup a Plenteum ID Network Node

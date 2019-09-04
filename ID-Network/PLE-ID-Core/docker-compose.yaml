@@ -1,11 +1,11 @@
 version: '3.5'
 
 services:
-  plenteum-id-network:
+  ple-id-core:
     image: hyperledger/iroha:master
-    container_name: plenteum-id-network
+    container_name: ple-id-core
     depends_on:
-      - plenteum-postgres
+      - ple-postgres
     restart: always
     tty: true
     environment:
@@ -22,12 +22,12 @@ services:
     ports:
       - 50051:50051
       - 10001:10001
-    # logging:
-    #   driver: none
+    logging:
+       driver: none
 
-  plenteum-postgres:
+  ple-postgres:
     image: postgres:9.5
-    container_name: postgres-plenteum
+    container_name: ple-postgres
     environment:
       - POSTGRES_PASSWORD=mysecretpassword
       - POSTGRES_USER=postgres
@@ -37,12 +37,12 @@ services:
     logging:
       driver: none
   
-  grpcwebproxy:
+  ple-id-grpcwebproxy:
     build:
       context: grpcwebproxy/
-    container_name: id-network-grpcwebproxy
+    container_name: ple-id-grpcwebproxy
     depends_on:
-      - plenteum-id-network
+      - ple-id-core
     entrypoint:
       - grpcwebproxy
       - --backend_addr=localhost:50051
