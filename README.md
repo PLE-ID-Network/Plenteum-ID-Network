@@ -26,18 +26,30 @@ Clone this repository
 
 Run the following commands with included scripts to install all of the required depencies automatically.
 
-For manual configurations, ensure that the Python 3.6 or Later, build-essentials 
+For manual configurations, ensure that the Python 3.6 or Later, build-essentials
 
-1. 
+#### Install Docker + Docker-compose
 
-cd PLE-ID-Core
+* Excecute ./PLE-ID-Core/scripts/install-docker.sh in Terminal
 
+#### Install Python & Crypto Depencies
 
- generate new keys using the script located in ./PLE-ID)Core/scripts
+* Excecute ./Command-Centre/scripts/install-python.sh in Terminal
 
-* Run ./install-python.sh
+#### PLE ID Core Configuration
 
-Run ./install-docker.sh if you do not have docker + docker-compose installed
+Generate new keys using the script located in ./Command-Centre/generate_node_key.py
+
+* cd ./Command-Centre
+* run python3 generate_node_key.py
+* provide node keypair name. default is node0
+* copy node keys e.g node0.priv & node0.pub to ./PLE-ID-Core/node/keys NODE KEYS MUST MATCH
+
+Request To Join Network.
+
+PLE ID Network is permissioned based hence peers need to be authenticated before being able to join the network and vote.
+
+Testnet only - Contact Plenteum Development Team(@blockhain_Bobby) for adding peers
 
 * docker-compose up -d (Runs in background)
 * docker-compose up Runs with Interactive Logs
